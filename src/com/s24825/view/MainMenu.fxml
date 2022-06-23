@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fx:id="optionsButton" fitHeight="33.0" fitWidth="98.0" layoutX="80.0" layoutY="201.0" onMouseClicked="#optionsMouseClicked" onMouseEntered="#optionsOnHover" onMouseExited="#optionsNotHover" pickOnBounds="true" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="201.0">
+         <image>
+            <Image url="@assets/options.png" />
+         </image>
+      </ImageView>
+      <ImageView id="newGame" fx:id="newGameButton" fitHeight="58.0" fitWidth="274.0" layoutX="81.0" layoutY="132.0" onMouseClicked="#newGameClicked" onMouseEntered="#newGameOnHover" onMouseExited="#newGameNotHover" pickOnBounds="true" AnchorPane.leftAnchor="81.0" AnchorPane.topAnchor="132.0">
+         <image>
+            <Image url="@assets/new-game.png" />
+         </image></ImageView>
+      <ImageView fx:id="highScoresButton" fitHeight="33.0" fitWidth="173.0" layoutX="218.0" layoutY="201.0" onMouseClicked="#highScoresClicked" onMouseEntered="#highScoresOnHover" onMouseExited="#highScoresNotHover" pickOnBounds="true" AnchorPane.leftAnchor="218.0" AnchorPane.topAnchor="201.0">
+         <image>
+            <Image url="@assets/high-scores.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="exitButton" fitHeight="41.0" fitWidth="87.0" layoutX="1099.0" layoutY="645.0" onMouseClicked="#exitOnClicked" onMouseEntered="#exitOnHover" onMouseExited="#exitNotHover" pickOnBounds="true" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0">
+         <image>
+            <Image url="@assets/exit.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

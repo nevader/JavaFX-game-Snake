@@ -1,0 +1,16 @@
+opengameart.org - asety do snake
+
+
+
+
+
+enumy z cssami
+
+zrobic pare wersji cssow
+
+dokonczyc menu
+
+i wziac sie w koncu za logike wensza
+
+
+zrobic swoje napisy / opcje / start / highscores /
