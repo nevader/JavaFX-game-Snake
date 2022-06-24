@@ -53,6 +53,8 @@ public class ViewFactory {
         stage.setMinHeight(400);
         stage.setMinWidth(500);
         stage.setResizable(false);
+
+        parent.requestFocus();
         stage.show();
 
         activeStages.add(stage);

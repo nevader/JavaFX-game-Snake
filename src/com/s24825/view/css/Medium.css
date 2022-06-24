@@ -6,16 +6,7 @@
 }
 
 
-#gameSpace {
-    -fx-pref-width: 800;
-    -fx-pref-height: 800;
-
-
-}
-
 #gameWindow {
-    -fx-pref-width: 800;
-    -fx-pref-height: 850;
     -fx-background-image: url("../assets/background2.png");
     -fx-border-color: black;
     -fx-border-width: 5;

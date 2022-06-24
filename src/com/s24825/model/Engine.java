@@ -1,8 +1,10 @@
 package com.s24825.model;
 
-import javafx.scene.canvas.Canvas;
+import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 
 public class Engine {
@@ -16,8 +18,13 @@ public class Engine {
     private final int columns;
     private final int squareSize;
 
-    private final Snake snake = new Snake();
+    private final Snake snake;
     private final Food food;
+
+    private final int UP = 0;
+    private final int DOWN = 1;
+    private final int LEFT = 2;
+    private final int RIGHT = 3;
 
     private Image back1;
     private Image back2;
@@ -28,11 +35,14 @@ public class Engine {
         this.columns = columns;
         this.squareSize = squareSize;
         this.food = new Food(board);
+        this.snake = new Snake(board);
     }
 
     public void start() {
         drawBackGround2();
         food.drawFood(rows, columns, squareSize);
+        snake.generateStartingSnake(0,0, squareSize);
+        snake.drawSnake(squareSize);
 
     }
 
@@ -69,6 +79,48 @@ public class Engine {
                 }
                 board.drawImage(image, i * squareSize, j * squareSize, squareSize, squareSize);
             }
+
+        }
+    }
+
+
+    //movement
+
+    public void moveRight(Point2D snakeHead) {
+        snakeHead.add(snakeHead.getX() + 1, snakeHead.getY());
+    }
+
+    public void moveLeft(Point2D snakeHead) {
+        snakeHead.add(snakeHead.getX() - 1, snakeHead.getY());
+    }
+
+    public void moveUp(Point2D snakeHead) {
+        snakeHead.add(snakeHead.getX(), snakeHead.getY() - 1);
+    }
+
+    public void moveDown(Point2D snakeHead) {
+        snakeHead.add(snakeHead.getX(), snakeHead.getY() +1);
+    }
+
+    public void onKeyPressed(KeyCode code) {
+        if (code == KeyCode.RIGHT) {
+            if (currentDirection != LEFT) {
+                currentDirection = RIGHT;
+            }
+            else if (code == KeyCode.LEFT) {
+                if (currentDirection != RIGHT) {
+                    currentDirection = LEFT;
+                }
+            } else if (code == KeyCode.UP) {
+                if (currentDirection != DOWN) {
+                    currentDirection = UP;
+                }
+            } else if (code == KeyCode.DOWN) {
+                if (currentDirection != UP) {
+                    currentDirection = DOWN;
+                }
+            }
+            System.out.println(currentDirection);
 
         }
     }

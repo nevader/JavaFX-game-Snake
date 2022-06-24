@@ -4,18 +4,25 @@ import com.s24825.model.Engine;
 import com.s24825.view.ViewFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.InputMethodEvent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
-import java.io.File;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 
 public class GameWindowController extends BaseController implements Initializable {
 
     private Engine engine;
+    private final DecimalFormat dt = new DecimalFormat("0.0");
 
     @FXML
     private Canvas canvas;
@@ -34,9 +41,23 @@ public class GameWindowController extends BaseController implements Initializabl
 
 
 
+/*
     @FXML
     void displayPosition(MouseEvent event) {
-        status.setText("x = " + event.getX() + "      y = " + event.getY());
+
+        double x = event.getX();
+        double y = event.getY();
+
+
+        status.setText("X: " + dt.format(x) + "       Y:" + dt.format(y));
+    }
+*/
+
+    @FXML
+    void onMouseClicked(MouseEvent event) {
+        Parent anchorPane = canvas.getParent();
+        anchorPane.requestFocus();
+        System.out.println(anchorPane.isFocused());
     }
 
 
@@ -48,11 +69,15 @@ public class GameWindowController extends BaseController implements Initializabl
 
 
 
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setValues();
         this.engine = new Engine(board, rows, columns, squareSize);
         engine.start();
+
+
     }
 
     private void setValues() {
