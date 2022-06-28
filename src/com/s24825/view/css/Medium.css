@@ -1,8 +1,15 @@
 #main{
     -fx-background-image: url("../assets/StartScreen.png");
     -fx-background-size: stretch;
-    -fx-pref-width: 1200;
-    -fx-pref-height: 700;
+    -fx-pref-width: 1366;
+    -fx-pref-height: 768;
+}
+
+#newGame{
+    -fx-background-image: url("../assets/StartScreen.png");
+    -fx-background-size: stretch;
+    -fx-pref-width: 1366;
+    -fx-pref-height: 768;
 }
 
 

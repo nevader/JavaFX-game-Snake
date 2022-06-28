@@ -1,39 +1,75 @@
 package com.s24825.model;
 
+import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 
-import java.io.File;
+import java.util.ArrayList;
+import java.util.Random;
 
-public class Food extends GameManager {
+public class Food {
 
-    private Image foodImage;
+    private final Image foodIncSizeImg;
+    private final Image foodDecSizeImg;
+    private Image foodToDraw;
+    private int currentFood;
+    private Random rand;
+
     private int foodX;
     private int foodY;
+
+
     private final GraphicsContext board;
 
     public Food(GraphicsContext board) {
         this.board = board;
-    }
-
-    public int generateFoodX(int rows) {
-            return (int) (Math.random() * rows);
-    }
-    public int generateFoodY(int columns) {
-        return (int) (Math.random() * columns);
-    }
-
-    public void drawFood(int rows, int columns, int squareSize) {
-
-        foodX = generateFoodX(rows);
-        foodY = generateFoodY(columns);
-
-        foodImage = new Image(getClass().getResourceAsStream("/com/s24825/view/assets/fruitSize.png"));
-
-        board.drawImage(foodImage, foodX * squareSize, foodY * squareSize, squareSize, squareSize);
-
+        this.foodIncSizeImg = new Image(getClass().getResourceAsStream("/com/s24825/view/assets/fruitSize.png"));
+        this.foodDecSizeImg = new Image(getClass().getResourceAsStream("/com/s24825/view/assets/fruitDecize.png"));
+        rand = new Random();
     }
 
 
+    public void drawFood(int squareSize) {
+        board.drawImage(foodToDraw, foodX * squareSize, foodY * squareSize, squareSize, squareSize);
+    }
+
+    public void generateFoodCords(int rows, int columns, ArrayList<Point2D> snakeBody) {
+
+        start:
+        while (true) {
+            foodX = (int) (Math.random() * rows);
+            foodY = (int) (Math.random() * columns);
+
+            for (Point2D snake : snakeBody) {
+                if (snake.getX() == foodX && snake.getY() == foodY) {
+                    continue start;
+                }
+            }
+            break;
+        }
+    }
+
+    public void generateFoodType() {
+        int val = rand.nextInt(10)+1;
+
+        if (val == 1) {
+            foodToDraw = foodDecSizeImg;
+            currentFood = 2;
+        } else {
+            foodToDraw = foodIncSizeImg;
+            currentFood = 1;
+        }
+    }
+
+
+
+
+
+    public int getFoodX() {
+        return foodX;
+    }
+
+    public int getFoodY() {
+        return foodY;
+    }
 }

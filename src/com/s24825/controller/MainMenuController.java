@@ -1,5 +1,6 @@
 package com.s24825.controller;
 
+import com.s24825.Settings;
 import com.s24825.view.ViewFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,8 +15,9 @@ import java.util.ResourceBundle;
 
 public class MainMenuController extends BaseController implements Initializable{
 
-    public MainMenuController(ViewFactory viewFactory, String fxmlName) {
-        super(viewFactory, fxmlName);
+
+    public MainMenuController(ViewFactory viewFactory, String fxmlName, Settings settings) {
+        super(viewFactory, fxmlName, settings);
     }
 
     @FXML
@@ -74,7 +76,7 @@ public class MainMenuController extends BaseController implements Initializable{
     void newGameClicked(MouseEvent event) {
         Stage stage = (Stage) newGameButton.getScene().getWindow();
 
-        viewFactory.showGameWindow();
+        viewFactory.showNewGame();
         viewFactory.closeStage(stage);
     }
 

@@ -1,13 +1,14 @@
 package com.s24825.view;
 
+import com.s24825.Settings;
 import com.s24825.controller.BaseController;
 import com.s24825.controller.GameWindowController;
 import com.s24825.controller.MainMenuController;
+import com.s24825.controller.NewGameController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,20 +17,32 @@ public class ViewFactory {
 
     private ArrayList<Stage> activeStages;
     private Styles styles = Styles.MEDIUM;
+    private final Settings settings;
 
-    public ViewFactory() {
+    public ViewFactory(Settings settings) {
         this.activeStages = new ArrayList<>();
+        this.settings = settings;
     }
 
+    public void loseWindow() {
+        BaseController loseWindow = new MainMenuController(this, "LoseWindow.fxml", settings);
+        initializeStages(loseWindow);
+
+    }
     public void showMainMenu() {
-        BaseController mainMenu = new MainMenuController(this, "MainMenu.fxml");
+        BaseController mainMenu = new MainMenuController(this, "MainMenu.fxml", settings);
         initializeStages(mainMenu);
 
     }
 
     public void showGameWindow() {
-        BaseController gameWindow = new GameWindowController(this, "GameWindow.fxml");
+        BaseController gameWindow = new GameWindowController(this, "GameWindow.fxml", settings);
         initializeStages(gameWindow);
+    }
+
+    public void showNewGame() {
+        BaseController newGame = new NewGameController(this, "NewGame.fxml", settings);
+        initializeStages(newGame);
     }
 
     private void initializeStages (BaseController controller) {

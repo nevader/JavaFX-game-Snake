@@ -2,42 +2,90 @@ package com.s24825.model;
 
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
-
+import javafx.scene.image.Image;
 import java.util.ArrayList;
-import java.util.List;
 
-public class Snake extends GameManager {
+public class Snake {
 
-    private int length;
-    private ArrayList<Point2D> snakeBody;
+    private final ArrayList<Point2D> snakeBody;
     private Point2D snakeHead;
-    private int currentDirection;
     private final GraphicsContext board;
+
+    private final Image snakeHeadImg;
+    private final Image snakeBodyImg;
 
     public Snake(GraphicsContext board) {
         this.board = board;
         this.snakeBody = new ArrayList<>();
+        this.snakeHeadImg = new Image(getClass().getResourceAsStream("/com/s24825/view/assets/snakeHead.png"));
+        this.snakeBodyImg = new Image(getClass().getResourceAsStream("/com/s24825/view/assets/snakeBody.png"));
     }
 
+
+
     public void generateStartingSnake(int startingX, int startingY, int snakeLength) {
-        for (int i = 0; i < snakeLength; i++) {
-            snakeBody.add(new Point2D(startingX, startingY));
-        }
-        snakeHead = snakeBody.get(0);
+
+       snakeHead = new Point2D(startingX, startingY);
+       snakeBody.add(snakeHead);
+       snakeBody.add(new Point2D(startingX, startingY - 1));
+       snakeBody.add(new Point2D(startingX, startingY - 2));
+
     }
+
+
+
+    public void updateSnake() {
+
+        snakeBody.set(0, snakeHead);
+
+        for (int i = snakeBody.size() - 1; i >= 1; i--) {
+            Point2D temp = snakeBody.get(i-1);
+            snakeBody.set(i, temp);
+        }
+
+
+    }
+
+
 
     public void drawSnake(int squareSize) {
 
-        board.setFill(Color.LIGHTBLUE);
-
-        board.fillRoundRect(snakeHead.getX() * squareSize, snakeHead.getY() * squareSize,
-                squareSize - 1, squareSize - 1, 35, 35);
+        board.drawImage(snakeHeadImg, snakeHead.getX() * squareSize, snakeHead.getY() * squareSize,
+                squareSize, squareSize);
 
         for (int i = 1; i < snakeBody.size(); i++) {
-            board.fillRoundRect(snakeHead.getX() * squareSize, snakeHead.getY() * squareSize,
-                    squareSize - 1, squareSize - 1, 20, 20);
+            board.drawImage(snakeBodyImg, snakeBody.get(i).getX() * squareSize,
+                    snakeBody.get(i).getY() * squareSize,
+                    squareSize, squareSize);
+
         }
     }
 
+
+
+    public void moveRight() {
+        snakeHead = snakeHead.add(1, 0);
+    }
+
+    public void moveLeft() {
+        snakeHead = snakeHead.subtract(1, 0);
+    }
+
+    public void moveUp() {
+        snakeHead = snakeHead.subtract(0, 1);
+    }
+
+    public void moveDown() {
+        snakeHead = snakeHead.add(0, 1);
+    }
+
+
+
+    public Point2D getSnakeHead() {
+        return snakeHead;
+    }
+
+    public ArrayList<Point2D> getSnakeBody() {
+        return snakeBody;
+    }
 }

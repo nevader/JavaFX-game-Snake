@@ -3,20 +3,34 @@ package com.s24825.model;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
+
+import java.util.ArrayList;
+import java.util.Objects;
 
 public class Engine {
 
+    private long timePassed;
+    private long timeStarted;
+
     private boolean isGameOver;
+
     private int currentDirection;
+    private boolean changedDirection = false;
+    private ArrayList<Point2D> lastbody = new ArrayList<>();
 
     private final GraphicsContext board;
+
+    private final Image back1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/s24825/view/assets/background1.png")));
+    private final Image back2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/s24825/view/assets/background2.png")));
 
     private final int rows;
     private final int columns;
     private final int squareSize;
+    private final int width;
+    private final int height;
+
+    private int totalScore = 0;
+    private final int fruitScore = 5;
 
     private final Snake snake;
     private final Food food;
@@ -26,47 +40,49 @@ public class Engine {
     private final int LEFT = 2;
     private final int RIGHT = 3;
 
-    private Image back1;
-    private Image back2;
 
-    public Engine(GraphicsContext board, int rows, int columns, int squareSize) {
+    public Engine(GraphicsContext board, int rows, int columns, int squareSize, int width, int height) {
         this.board = board;
         this.rows = rows;
         this.columns = columns;
         this.squareSize = squareSize;
-        this.food = new Food(board);
+        this.height = height;
+        this.width = width;
         this.snake = new Snake(board);
+        this.food = new Food(board);
+
     }
 
+
     public void start() {
-        drawBackGround2();
-        food.drawFood(rows, columns, squareSize);
-        snake.generateStartingSnake(0,0, squareSize);
+        snake.generateStartingSnake(rows / 2, columns / 2, 3);
+        food.generateFoodCords(rows, columns, snake.getSnakeBody());
+        food.generateFoodType();
+        timeStarted = System.currentTimeMillis();
+
+    }
+
+
+    public void mainGame() {
+        whereToMove(currentDirection);
+        gameOver();
+
+        if (isGameOver) {
+            return;
+        }
+
+        drawBackGround();
+        food.drawFood(squareSize);
         snake.drawSnake(squareSize);
+        snake.updateSnake();
+        eatFood();
+        lastbody = snake.getSnakeBody();
+        changedDirection = false;
+
 
     }
 
     public void drawBackGround() {
-
-        Color color2 = Color.rgb(192, 242, 40, 0.8);
-        Color color1 = Color.rgb(92, 207, 47, 0.8);
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                if ((i + j) % 2 == 0) {
-                    board.setFill(color2);
-                } else {
-                    board.setFill(color1);
-                }
-                board.fillRect(i * squareSize, j * squareSize, squareSize, squareSize);
-            }
-
-        }
-    }
-    public void drawBackGround2() {
-
-        back1 = new Image(getClass().getResourceAsStream("/com/s24825/view/assets/background1.png"));
-        back2 = new Image(getClass().getResourceAsStream("/com/s24825/view/assets/background2.png"));
 
         Image image;
 
@@ -79,54 +95,86 @@ public class Engine {
                 }
                 board.drawImage(image, i * squareSize, j * squareSize, squareSize, squareSize);
             }
-
         }
     }
 
+    public void whereToMove(int currentDirection) {
+        switch (currentDirection) {
+            case RIGHT:
+                snake.moveRight();
+                break;
+            case LEFT:
+                snake.moveLeft();
+                break;
+            case UP:
+                snake.moveUp();
+                break;
+            case DOWN:
+                snake.moveDown();
+                break;
+        }
 
-    //movement
-
-    public void moveRight(Point2D snakeHead) {
-        snakeHead.add(snakeHead.getX() + 1, snakeHead.getY());
     }
 
-    public void moveLeft(Point2D snakeHead) {
-        snakeHead.add(snakeHead.getX() - 1, snakeHead.getY());
-    }
 
-    public void moveUp(Point2D snakeHead) {
-        snakeHead.add(snakeHead.getX(), snakeHead.getY() - 1);
-    }
+    public void eatFood() {
+        if (snake.getSnakeHead().getX() == food.getFoodX() &&
+                snake.getSnakeHead().getY() == food.getFoodY()) {
 
-    public void moveDown(Point2D snakeHead) {
-        snakeHead.add(snakeHead.getX(), snakeHead.getY() +1);
-    }
+            snake.getSnakeBody().add(new Point2D(-50, -50));
+            totalScore += (fruitScore * timePassed/1000);
 
-    public void onKeyPressed(KeyCode code) {
-        if (code == KeyCode.RIGHT) {
-            if (currentDirection != LEFT) {
-                currentDirection = RIGHT;
-            }
-            else if (code == KeyCode.LEFT) {
-                if (currentDirection != RIGHT) {
-                    currentDirection = LEFT;
-                }
-            } else if (code == KeyCode.UP) {
-                if (currentDirection != DOWN) {
-                    currentDirection = UP;
-                }
-            } else if (code == KeyCode.DOWN) {
-                if (currentDirection != UP) {
-                    currentDirection = DOWN;
-                }
-            }
-            System.out.println(currentDirection);
-
+            food.generateFoodCords(rows, columns, snake.getSnakeBody());
+            food.generateFoodType();
         }
     }
 
+    public void gameOver() {
 
+        int x = (int) snake.getSnakeHead().getX();
+        int y = (int) snake.getSnakeHead().getY();
 
+        if (x < 0 || y < 0 ||
+                x * squareSize >= width ||
+                y * squareSize >= height) {
+            isGameOver = true;
+        }
 
+        for (int i = 1; i < lastbody.size(); i++) {
+            if (snake.getSnakeHead().getX() == lastbody.get(i).getX() &&
+                    snake.getSnakeHead().getY() == lastbody.get(i).getY()) {
+                isGameOver = true;
+                break;
+            }
+        }
+    }
 
+    public long calculateTime() {
+        timePassed = System.currentTimeMillis() - timeStarted;
+        return timePassed;
+    }
+
+    public void setCurrentDirection(int currentDirection) {
+        this.currentDirection = currentDirection;
+    }
+
+    public int getCurrentDirection() {
+        return currentDirection;
+    }
+
+    public boolean isChangedDirection() {
+        return changedDirection;
+    }
+
+    public void setChangedDirection(boolean changedDirection) {
+        this.changedDirection = changedDirection;
+    }
+
+    public boolean isGameOver() {
+        return isGameOver;
+    }
+
+    public String getTotalScore() {
+        return String.valueOf(totalScore);
+    }
 }
