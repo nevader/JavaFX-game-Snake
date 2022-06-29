@@ -5,6 +5,7 @@ public class Settings {
     private int columns = 12;
     private int rows = columns;
     private int speed = 120;
+    private int highscore = -1;
 
     public int getSpeed() {
         return speed;

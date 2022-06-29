@@ -7,29 +7,39 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="gameWindow" onKeyPressed="#onKeyPressed" prefHeight="680.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="gameWindow" onKeyPressed="#onKeyPressed" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Canvas id="gameSpace" fx:id="canvas" height="800.0" width="800.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0" />
-      <Text fx:id="timeLabel" layoutX="54.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="118.13671875">
+      <Canvas id="gameSpace" fx:id="canvas" height="800.0" width="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Text fx:id="timeLabel" fontSmoothingType="LCD" layoutX="55.0" layoutY="58.740234375" opacity="0.8" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="118.13671875" AnchorPane.topAnchor="35.0">
          <font>
-            <Font size="22.0" />
+            <Font name="System Bold" size="22.0" />
          </font></Text>
-      <Text fx:id="scoreLabel" layoutX="513.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="65.0">
+      <Text fx:id="scoreLabel" fontSmoothingType="LCD" layoutX="692.0" layoutY="57.357421875" opacity="0.8" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="65.0" AnchorPane.topAnchor="38.0">
          <font>
-            <Font name="Yu Gothic Regular" size="22.0" />
+            <Font name="System Bold" size="22.0" />
          </font>
       </Text>
-      <ImageView fx:id="timeImg" fitHeight="30.0" fitWidth="100.0" layoutX="34.0" layoutY="20.0" pickOnBounds="true">
+      <ImageView fx:id="timeImg" fitHeight="30.0" fitWidth="100.0" layoutX="177.0" layoutY="64.0" opacity="0.8" pickOnBounds="true" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="5.0">
          <image>
             <Image url="@assets/time.png" />
          </image></ImageView>
-      <ImageView fx:id="scoreImg" fitHeight="30.0" fitWidth="100.0" layoutX="494.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="scoreImg" fitHeight="30.0" fitWidth="100.0" layoutX="494.0" layoutY="27.0" opacity="0.8" pickOnBounds="true" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="5.0">
          <image>
             <Image url="@assets/score.png" />
          </image></ImageView>
-      <ImageView fx:id="loseScreen" fitHeight="812.0" fitWidth="824.0" pickOnBounds="true" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ImageView fx:id="loseScreen" fitHeight="800.0" fitWidth="800.0" pickOnBounds="true" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
-            <Image url="@assets/Vignette.png" />
+            <Image url="@assets/loseScreen2.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="exitBtn" fitHeight="50.0" fitWidth="100.0" layoutX="14.0" layoutY="745.0" onMouseEntered="#exitOnHover" onMouseExited="#exitOnNotHover" onMousePressed="#exitOnPressed" pickOnBounds="true" visible="false">
+         <image>
+            <Image url="@assets/exit.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="submitBtn" fitHeight="50.0" fitWidth="150.0" layoutX="641.0" layoutY="749.0" onMouseEntered="#submitOnHover" onMouseExited="#sbmitOnNotHover" onMousePressed="#subOnPressed" pickOnBounds="true" visible="false">
+         <image>
+            <Image url="@assets/submit.png" />
          </image>
       </ImageView>
    </children>

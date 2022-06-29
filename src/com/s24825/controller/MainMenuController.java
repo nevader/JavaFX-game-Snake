@@ -42,7 +42,8 @@ public class MainMenuController extends BaseController implements Initializable{
 
     @FXML
     void exitOnClicked(MouseEvent event) {
-
+        Stage stage = (Stage) newGameButton.getScene().getWindow();
+        stage.close();
     }
 
     @FXML

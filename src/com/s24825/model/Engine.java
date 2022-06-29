@@ -66,11 +66,9 @@ public class Engine {
     public void mainGame() {
         whereToMove(currentDirection);
         gameOver();
-
         if (isGameOver) {
             return;
         }
-
         drawBackGround();
         food.drawFood(squareSize);
         snake.drawSnake(squareSize);
@@ -118,10 +116,21 @@ public class Engine {
 
 
     public void eatFood() {
+
+
+
         if (snake.getSnakeHead().getX() == food.getFoodX() &&
                 snake.getSnakeHead().getY() == food.getFoodY()) {
 
-            snake.getSnakeBody().add(new Point2D(-50, -50));
+            if (food.getCurrentFood() == food.getSizeUpFood()) {
+                snake.getSnakeBody().add(new Point2D(-50, -50));
+            } else if (food.getCurrentFood() == food.getSizeDownFood()) {
+                if (snake.getSnakeBody().size() > 1) {
+                    int index = snake.getSnakeBody().size() - 1;
+                    snake.getSnakeBody().remove(index);
+                }
+            }
+
             totalScore += (fruitScore * timePassed/1000);
 
             food.generateFoodCords(rows, columns, snake.getSnakeBody());

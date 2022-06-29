@@ -1,15 +1,19 @@
 #main{
     -fx-background-image: url("../assets/StartScreen.png");
     -fx-background-size: stretch;
-    -fx-pref-width: 1366;
-    -fx-pref-height: 768;
+    -fx-pref-width: 800;
+    -fx-pref-height: 800;
+    -fx-border-color: black;
+    -fx-border-width: 5;
 }
 
 #newGame{
     -fx-background-image: url("../assets/StartScreen.png");
     -fx-background-size: stretch;
-    -fx-pref-width: 1366;
-    -fx-pref-height: 768;
+    -fx-pref-width: 800;
+    -fx-pref-height: 800;
+    -fx-border-color: black;
+    -fx-border-width: 5;
 }
 
 
@@ -18,3 +22,11 @@
     -fx-border-color: black;
     -fx-border-width: 5;
 }
+
+#text {
+    -fx-border-color: black;
+    -fx-border-width: 3;
+    -fx-background-color: rgba(0, 0, 0, 0.62);
+}
+
+

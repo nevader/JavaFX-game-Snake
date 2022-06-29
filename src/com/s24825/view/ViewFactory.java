@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -65,6 +66,7 @@ public class ViewFactory {
         scene.getStylesheets().add(getClass().getResource(Styles.getCssPath(styles)).toExternalForm());
         stage.setMinHeight(400);
         stage.setMinWidth(500);
+        stage.initStyle(StageStyle.UNDECORATED);
         stage.setResizable(false);
 
         parent.requestFocus();

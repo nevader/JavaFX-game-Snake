@@ -18,6 +18,9 @@ public class Food {
     private int foodX;
     private int foodY;
 
+    private final int sizeDownFood = 2;
+    private final int sizeUpFood = 1;
+
 
     private final GraphicsContext board;
 
@@ -54,10 +57,10 @@ public class Food {
 
         if (val == 1) {
             foodToDraw = foodDecSizeImg;
-            currentFood = 2;
+            currentFood = sizeDownFood;
         } else {
             foodToDraw = foodIncSizeImg;
-            currentFood = 1;
+            currentFood = sizeUpFood;
         }
     }
 
@@ -71,5 +74,17 @@ public class Food {
 
     public int getFoodY() {
         return foodY;
+    }
+
+    public int getCurrentFood() {
+        return currentFood;
+    }
+
+    public int getSizeDownFood() {
+        return sizeDownFood;
+    }
+
+    public int getSizeUpFood() {
+        return sizeUpFood;
     }
 }
