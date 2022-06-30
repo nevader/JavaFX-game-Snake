@@ -31,12 +31,12 @@ public class NewGameController extends BaseController {
 
     @FXML
     void BackOnHover(MouseEvent event) {
-        dropShadowOn(event);
+        viewFactory.dropShadowOn(event);
     }
 
     @FXML
     void BackOnNotHover(MouseEvent event) {
-        dropShadowOff(event);
+        viewFactory.dropShadowOff(event);
     }
 
     @FXML
@@ -88,29 +88,12 @@ public class NewGameController extends BaseController {
 
     @FXML
     void playOnHover(MouseEvent event) {
-        dropShadowOn(event);
+        viewFactory.dropShadowOn(event);
     }
 
     @FXML
     void playOnNotHover(MouseEvent event) {
-        dropShadowOff(event);
+        viewFactory.dropShadowOff(event);
 
-    }
-
-    private void dropShadowOn (MouseEvent event) {
-
-        ImageView source = (ImageView) event.getSource();
-
-        DropShadow dropShadow = new DropShadow();
-        dropShadow.setOffsetX(4);
-        dropShadow.setOffsetY(6);
-        dropShadow.setColor(Color.BLACK);
-
-        source.setEffect(dropShadow);
-    }
-
-    private void dropShadowOff (MouseEvent event) {
-        ImageView source = (ImageView) event.getSource();
-        source.setEffect(null);
     }
 }

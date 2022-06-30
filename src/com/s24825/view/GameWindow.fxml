@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -42,5 +44,31 @@
             <Image url="@assets/submit.png" />
          </image>
       </ImageView>
+      <ImageView fx:id="finalScoreImg" fitHeight="150.0" fitWidth="200.0" layoutX="300.0" layoutY="347.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@assets/score.png" />
+         </image>
+      </ImageView>
+      <TextField id="text" fx:id="finalScoreLabel" alignment="CENTER" editable="false" layoutX="325.0" layoutY="400.0" prefHeight="50.0" prefWidth="150.0" visible="false">
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </TextField>
+      <ImageView fx:id="nameImg" fitHeight="150.0" fitWidth="200.0" layoutX="300.0" layoutY="502.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@assets/name.png" />
+         </image>
+      </ImageView>
+      <TextField id="text" fx:id="nameField" alignment="CENTER" layoutX="276.0" layoutY="565.0" prefHeight="50.0" prefWidth="248.0" visible="false">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </TextField>
    </children>
 </AnchorPane>

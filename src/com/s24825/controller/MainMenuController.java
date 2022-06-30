@@ -36,7 +36,7 @@ public class MainMenuController extends BaseController implements Initializable{
 
     @FXML
     void exitNotHover(MouseEvent event) {
-        dropShadowOff(event);
+        viewFactory.dropShadowOff(event);
 
     }
 
@@ -48,7 +48,7 @@ public class MainMenuController extends BaseController implements Initializable{
 
     @FXML
     void exitOnHover(MouseEvent event) {
-        dropShadowOn(event);
+        viewFactory.dropShadowOn(event);
 
     }
 
@@ -56,18 +56,22 @@ public class MainMenuController extends BaseController implements Initializable{
 
     @FXML
     void highScoresClicked(MouseEvent event) {
+        Stage stage = (Stage) newGameButton.getScene().getWindow();
+
+        viewFactory.showHighScores();
+        viewFactory.closeStage(stage);
 
     }
 
     @FXML
     void highScoresNotHover(MouseEvent event) {
-        dropShadowOff(event);
+        viewFactory.dropShadowOff(event);
 
     }
 
     @FXML
     void highScoresOnHover(MouseEvent event) {
-        dropShadowOn(event);
+        viewFactory.dropShadowOn(event);
 
     }
 
@@ -83,12 +87,12 @@ public class MainMenuController extends BaseController implements Initializable{
 
     @FXML
     void newGameNotHover(MouseEvent event) {
-        dropShadowOff(event);
+        viewFactory.dropShadowOff(event);
     }
 
     @FXML
     void newGameOnHover(MouseEvent event) {
-        dropShadowOn(event);
+        viewFactory.dropShadowOn(event);
 
     }
 
@@ -99,13 +103,13 @@ public class MainMenuController extends BaseController implements Initializable{
 
     @FXML
     void optionsNotHover(MouseEvent event) {
-        dropShadowOff(event);
+        viewFactory.dropShadowOff(event);
 
     }
 
     @FXML
     void optionsOnHover(MouseEvent event) {
-        dropShadowOn(event);
+        viewFactory.dropShadowOn(event);
 
     }
 
@@ -114,23 +118,6 @@ public class MainMenuController extends BaseController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-    }
-
-    private void dropShadowOn (MouseEvent event) {
-
-        ImageView source = (ImageView) event.getSource();
-
-        DropShadow dropShadow = new DropShadow();
-        dropShadow.setOffsetX(4);
-        dropShadow.setOffsetY(6);
-        dropShadow.setColor(Color.BLACK);
-
-        source.setEffect(dropShadow);
-    }
-
-    private void dropShadowOff (MouseEvent event) {
-        ImageView source = (ImageView) event.getSource();
-        source.setEffect(null);
     }
 
 }

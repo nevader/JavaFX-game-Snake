@@ -1,13 +1,14 @@
 package com.s24825.view;
 
 import com.s24825.Settings;
-import com.s24825.controller.BaseController;
-import com.s24825.controller.GameWindowController;
-import com.s24825.controller.MainMenuController;
-import com.s24825.controller.NewGameController;
+import com.s24825.controller.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -25,11 +26,12 @@ public class ViewFactory {
         this.settings = settings;
     }
 
-    public void loseWindow() {
-        BaseController loseWindow = new MainMenuController(this, "LoseWindow.fxml", settings);
-        initializeStages(loseWindow);
 
+    public void showHighScores() {
+        BaseController highScores = new HighScoresController(this, "HighScores.fxml", settings);
+        initializeStages(highScores);
     }
+
     public void showMainMenu() {
         BaseController mainMenu = new MainMenuController(this, "MainMenu.fxml", settings);
         initializeStages(mainMenu);
@@ -79,4 +81,23 @@ public class ViewFactory {
         stageToClose.close();
         activeStages.remove(stageToClose);
     }
+
+
+    public void dropShadowOn (MouseEvent event) {
+
+        ImageView source = (ImageView) event.getSource();
+
+        DropShadow dropShadow = new DropShadow();
+        dropShadow.setOffsetX(4);
+        dropShadow.setOffsetY(6);
+        dropShadow.setColor(Color.BLACK);
+
+        source.setEffect(dropShadow);
+    }
+
+    public void dropShadowOff (MouseEvent event) {
+        ImageView source = (ImageView) event.getSource();
+        source.setEffect(null);
+    }
+
 }

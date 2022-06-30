@@ -11,16 +11,19 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.effect.DropShadow;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -28,6 +31,17 @@ import java.util.ResourceBundle;
 
 public class GameWindowController extends BaseController implements Initializable {
 
+
+    @FXML
+    private ImageView finalScoreImg;
+    @FXML
+    private TextField finalScoreLabel;
+
+    @FXML
+    private TextField nameField;
+
+    @FXML
+    private ImageView nameImg;
 
     @FXML
     private Canvas canvas;
@@ -55,30 +69,36 @@ public class GameWindowController extends BaseController implements Initializabl
 
     @FXML
     void sbmitOnNotHover(MouseEvent event) {
-        dropShadowOff(event);
-
+        viewFactory.dropShadowOff(event);
     }
 
     @FXML
     void subOnPressed(MouseEvent event) {
+        saveHighSCore();
+
+        Stage stage = (Stage) canvas.getScene().getWindow();
+
+        viewFactory.showMainMenu();
+        viewFactory.closeStage(stage);
+
 
     }
 
     @FXML
     void submitOnHover(MouseEvent event) {
-        dropShadowOn(event);
+        viewFactory.dropShadowOn(event);
 
     }
 
     @FXML
     void exitOnHover(MouseEvent event) {
-        dropShadowOn(event);
+        viewFactory.dropShadowOn(event);
 
     }
 
     @FXML
     void exitOnNotHover(MouseEvent event) {
-        dropShadowOff(event);
+        viewFactory.dropShadowOff(event);
 
     }
 
@@ -95,6 +115,23 @@ public class GameWindowController extends BaseController implements Initializabl
     void onKeyPressed(KeyEvent event) {
 
         KeyCode code = event.getCode();
+
+        if (code == KeyCode.R && !event.isShiftDown()) {
+            Stage stage = (Stage) canvas.getScene().getWindow();
+
+            viewFactory.showGameWindow();
+            viewFactory.closeStage(stage);
+        }
+
+        if (code == KeyCode.R && event.isShiftDown()) {
+
+            Stage stage = (Stage) canvas.getScene().getWindow();
+
+            viewFactory.closeStage(stage);
+            viewFactory.showMainMenu();
+
+        }
+
         int currentDirection = engine.getCurrentDirection();
 
         if (!engine.isChangedDirection()) {
@@ -224,27 +261,52 @@ public class GameWindowController extends BaseController implements Initializabl
         this.squareSize = width / settings.getColumns();
     }
 
-    private void dropShadowOn (MouseEvent event) {
-
-        ImageView source = (ImageView) event.getSource();
-
-        DropShadow dropShadow = new DropShadow();
-        dropShadow.setOffsetX(4);
-        dropShadow.setOffsetY(6);
-        dropShadow.setColor(Color.BLACK);
-
-        source.setEffect(dropShadow);
-    }
-
-    private void dropShadowOff (MouseEvent event) {
-        ImageView source = (ImageView) event.getSource();
-        source.setEffect(null);
-    }
 
     private void loseScreenEnable() {
         loseScreen.setVisible(true);
         exitBtn.setVisible(true);
         submitBtn.setVisible(true);
+        finalScoreImg.setVisible(true);
+        nameField.setVisible(true);
+        nameImg.setVisible(true);
+        finalScoreLabel.setText(engine.getTotalScore());
+        finalScoreLabel.setVisible(true);
+    }
+
+    private void saveHighSCore() {
+        String name = nameField.getText();
+        String highscore = name + ":" + engine.getTotalScore();
+
+        File scoreFile = new File("highscore.txt");
+
+        if (!scoreFile.exists()) {
+            try {
+                scoreFile.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        FileWriter fileWriter;
+        BufferedWriter bufferedWriter = null;
+
+        try {
+            fileWriter = new FileWriter(scoreFile, true);
+            bufferedWriter = new BufferedWriter(fileWriter);
+            bufferedWriter.write(highscore);
+            bufferedWriter.newLine();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (bufferedWriter != null) {
+                try {
+                    bufferedWriter.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
 
