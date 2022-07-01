@@ -16,7 +16,7 @@ public class Launcher extends Application {
 
         Settings settings = new Settings();
         ViewFactory viewFactory = new ViewFactory(settings);
-        viewFactory.showNewGame();
+        viewFactory.showMainMenu();
 
     }
 }

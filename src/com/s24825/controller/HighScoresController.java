@@ -4,21 +4,16 @@ import com.s24825.Settings;
 import com.s24825.view.ViewFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.MouseEvent;;
 import javafx.stage.Stage;
-
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+
 import java.util.ResourceBundle;
 
 public class HighScoresController extends BaseController implements Initializable {
@@ -30,11 +25,14 @@ public class HighScoresController extends BaseController implements Initializabl
     private ImageView backBtn;
 
     @FXML
-    private TextArea highscoreTable;
+    private TextArea highscoreTableName;
+
+    @FXML
+    private TextArea highscoreTableScore;
 
     @FXML
     void backClicked(MouseEvent event) {
-        Stage stage = (Stage) highscoreTable.getScene().getWindow();
+        Stage stage = (Stage) highscoreTableName.getScene().getWindow();
 
         viewFactory.showMainMenu();
         viewFactory.closeStage(stage);
@@ -51,10 +49,10 @@ public class HighScoresController extends BaseController implements Initializabl
         viewFactory.dropShadowOn(event);
     }
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         pupulateHighScore();
+        highscoreTableName.scrollTopProperty().bindBidirectional(highscoreTableScore.scrollTopProperty());
     }
 
     private void pupulateHighScore() {
@@ -80,35 +78,35 @@ public class HighScoresController extends BaseController implements Initializabl
             e.printStackTrace();
         }
 
+        ArrayList<String> sortedHigh = bubbleSort(high, high.size());
 
+        for (int i = sortedHigh.size(); i >= 1; i--) {
 
-        for (int i = high.size(); i >= 1; i--) {
-            highscoreTable.appendText(high.get(i-1) + "\n");
+            highscoreTableName.appendText(digitremove(sortedHigh.get(i-1)) + "\n");
+            highscoreTableScore.appendText(stringtoint(sortedHigh.get(i-1)) + "\n");
         }
-
     }
 
-    public ArrayList<String> sorting(ArrayList<String> arrayList) {
+    public ArrayList<String> bubbleSort(ArrayList<String> arr, int n) {
+        if (n == 1)                     //passes are done
+        {
+            return arr;
+        }
 
-        int n = arrayList.size();
-        String temp = "";
-
-
-        for(int i=0; i < n; i++){
-            for(int j=1; j < (n-i); j++){
-
-                long jot1 = stringtoint(arrayList.get(j-1));
-                long jot = stringtoint(arrayList.get(j));
-
-                if(jot1 > jot){
-                    temp = arrayList.get(j);
-                    arrayList.set(j-1, arrayList.get(j));
-                    arrayList.set(j, temp);
-                }
-
+        for (int i=0; i<n-1; i++)       //iteration through unsorted elements
+        {
+            long arri = stringtoint(arr.get(i));
+            long arri1 = stringtoint(arr.get(i+1));
+            if (arri > arri1)      //check if the elements are in order
+            {                           //if not, swap them
+                String temp = arr.get(i);
+                arr.set(i, arr.get(i+1));
+                arr.set(i+1, temp);
             }
         }
-        return arrayList;
+
+        bubbleSort(arr, n-1);           //one pass done, proceed to the next
+        return arr;
     }
 
 
@@ -116,5 +114,11 @@ public class HighScoresController extends BaseController implements Initializabl
         String DIGIT_AND_DECIMAL_REGEX = "[^\\d.]";
         String digits = st.replaceAll(DIGIT_AND_DECIMAL_REGEX, "");
         return Long.parseLong(digits);
+    }
+
+    public String digitremove(String st) {
+        String Regex = "[\\d]";
+        String letters = st.replaceAll(Regex, "");
+        return letters.replace(":", "");
     }
 }

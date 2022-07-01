@@ -80,8 +80,6 @@ public class GameWindowController extends BaseController implements Initializabl
 
         viewFactory.showMainMenu();
         viewFactory.closeStage(stage);
-
-
     }
 
     @FXML
