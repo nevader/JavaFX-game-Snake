@@ -247,10 +247,7 @@ public class GameWindowController extends BaseController implements Initializabl
         timerTimeLine();
         scoreTimeLine();
         gameTimeLine();
-
-
     }
-
 
     private void setValues() {
         this.board = canvas.getGraphicsContext2D();
@@ -270,6 +267,7 @@ public class GameWindowController extends BaseController implements Initializabl
         finalScoreLabel.setText(engine.getTotalScore());
         finalScoreLabel.setVisible(true);
     }
+
 
     private void saveHighSCore() {
         String name = nameField.getText();

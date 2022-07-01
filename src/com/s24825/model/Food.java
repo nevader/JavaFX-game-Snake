@@ -66,8 +66,6 @@ public class Food {
 
 
 
-
-
     public int getFoodX() {
         return foodX;
     }
